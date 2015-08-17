@@ -80,9 +80,15 @@ namespace Clock
             SwapBuffers();
         }
 
+        float toPercentage(int full, int current)
+        {
+            return ((float) current/ full);
+        }
+
         public void DrawSecondHand (float length)
         {
-            float angle = (360 / 60) * (now.Second + 15);
+            float milis = (float)now.Millisecond / 1000;
+            float angle = (360 / 60) * (now.Second + milis + 15);
             angle *= (float)((Math.PI * 2f) / 360f);
             Vector2 vec = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             vec *= length;
@@ -92,7 +98,10 @@ namespace Clock
 
         public void DrawMinuteHand(float length)
         {
-            float angle = (360 / 60) * (now.Minute + 15);
+            float milis = (float)now.Millisecond / 1000;
+            float seconds = (toPercentage(60, now.Second) + milis / 100);
+            Console.WriteLine(now.Minute + seconds);
+            float angle = (360 / 60) * (now.Minute + seconds + 15);
             angle *= (float)((Math.PI * 2f) / 360f);
             Vector2 vec = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             vec *= length;
@@ -102,7 +111,8 @@ namespace Clock
 
         public void DrawHourHand(float length)
         {
-            float angle = (360 / 12) * (now.Hour + 3);
+            float mins = toPercentage(60, now.Minute);
+            float angle = (360 / 12) * (now.Hour + mins + 3);
             angle *= (float)((Math.PI * 2f) / 360f);
             Vector2 vec = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
             vec *= length;
