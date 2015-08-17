@@ -9,7 +9,9 @@ namespace Clock
 {
     class ClockWindow : GameWindow
     {
-        public ClockWindow() : base(600, 600, GraphicsMode.Default, "Clock")
+        DateTime now;
+
+        public ClockWindow() : base(600, 600, new GraphicsMode(32 , 24, 8, 64), "Clock")
         {
             VSync = VSyncMode.On;
         }
@@ -39,6 +41,8 @@ namespace Clock
         {
             base.OnUpdateFrame(e);
 
+            now = DateTime.Now;
+
             if (Keyboard[Key.Escape])
                 Exit();
         }
@@ -59,12 +63,15 @@ namespace Clock
 
             //DrawLine(new Vector3(0, 0, 4), new Vector3(-0.8f, 0.8f, 4.0f));
             GL.Color3(Color.Blue);
+            GL.LineWidth(3);
             DrawHourHand(Height /2 * 0.9f);
             //DrawCircle(0, 0, 1.3f, 720);
             GL.Color3(Color.Green);
+            GL.LineWidth(2);
             DrawMinuteHand(Height/2 * 0.75f);
             //DrawCircle(0, 0, 1f, 720);
             GL.Color3(Color.Red);
+            GL.LineWidth(1);
             DrawSecondHand(Height/2 * 0.5f);
             //DrawCircle(0, 0, 0.8f, 720);
             GL.Color3(Color.Black);
@@ -75,7 +82,6 @@ namespace Clock
 
         public void DrawSecondHand (float length)
         {
-            DateTime now = DateTime.Now;
             float angle = (360 / 60) * (now.Second + 15);
             angle *= (float)((Math.PI * 2f) / 360f);
             Vector2 vec = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
@@ -86,7 +92,6 @@ namespace Clock
 
         public void DrawMinuteHand(float length)
         {
-            DateTime now = DateTime.Now;
             float angle = (360 / 60) * (now.Minute + 15);
             angle *= (float)((Math.PI * 2f) / 360f);
             Vector2 vec = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
@@ -97,7 +102,6 @@ namespace Clock
 
         public void DrawHourHand(float length)
         {
-            DateTime now = DateTime.Now;
             float angle = (360 / 12) * (now.Hour + 3);
             angle *= (float)((Math.PI * 2f) / 360f);
             Vector2 vec = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
