@@ -27,7 +27,8 @@ namespace Clock
 
             GL.Viewport(ClientRectangle.X, ClientRectangle.Y, ClientRectangle.Width, ClientRectangle.Height);
 
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
+            //Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
+            Matrix4 projection = Matrix4.CreateOrthographic(Width, Height, 0, 20);
 
             GL.MatrixMode(MatrixMode.Projection);
 
@@ -58,16 +59,16 @@ namespace Clock
 
             //DrawLine(new Vector3(0, 0, 4), new Vector3(-0.8f, 0.8f, 4.0f));
             GL.Color3(Color.Blue);
-            DrawHourHand(1.3f);
+            DrawHourHand(Height /2 * 0.9f);
             //DrawCircle(0, 0, 1.3f, 720);
             GL.Color3(Color.Green);
-            DrawMinuteHand(1f);
+            DrawMinuteHand(Height/2 * 0.75f);
             //DrawCircle(0, 0, 1f, 720);
             GL.Color3(Color.Red);
-            DrawSecondHand(0.8f);
+            DrawSecondHand(Height/2 * 0.5f);
             //DrawCircle(0, 0, 0.8f, 720);
             GL.Color3(Color.Black);
-            DrawCircle(0, 0, 1.4f, 720);
+            DrawCircle(0, 0, Height/2 * 0.98f, 720);
 
             SwapBuffers();
         }
